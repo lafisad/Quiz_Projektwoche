@@ -7,12 +7,45 @@
 <meta name="mobile-web-app-capable" content="YES">
 <meta name="theme-color" content="#880925">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: https://www.rps-herten.de; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com;">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data:; connect-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none';">
 <title>Jubiläums-Quiz 50 Jahre · Rosa-Parks-Schule Herten</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&family=Quicksand:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
+  /* Local fonts – Comfortaa & Quicksand are variable fonts (300–700).
+     Hosted on-site so no third-party request leaves the page (DSGVO,
+     cf. LG München I, Google-Fonts decision). SIL Open Font License. */
+  @font-face {
+    font-family: "Comfortaa";
+    font-style: normal;
+    font-weight: 300 700;
+    font-display: swap;
+    src: url("fonts/comfortaa-latin.woff2") format("woff2");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+  @font-face {
+    font-family: "Comfortaa";
+    font-style: normal;
+    font-weight: 300 700;
+    font-display: swap;
+    src: url("fonts/comfortaa-latin-ext.woff2") format("woff2");
+    unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  @font-face {
+    font-family: "Quicksand";
+    font-style: normal;
+    font-weight: 300 700;
+    font-display: swap;
+    src: url("fonts/quicksand-latin.woff2") format("woff2");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+  @font-face {
+    font-family: "Quicksand";
+    font-style: normal;
+    font-weight: 300 700;
+    font-display: swap;
+    src: url("fonts/quicksand-latin-ext.woff2") format("woff2");
+    unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+
   :root {
     --rps: #880925;            /* burgundy – school primary */
     --rps-dark: #6b071d;
@@ -388,6 +421,65 @@
     color: #cfcfcf;
     text-align: center;
   }
+  .legal-links { margin-top: 10px; }
+  .legal-link {
+    background: none;
+    border: none;
+    padding: 2px 4px;
+    font: inherit;
+    font-size: 13px;
+    color: #ffd7dd;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  .legal-link:hover { color: #fff; }
+  .legal-link:focus-visible { outline: 2px solid #ffd7dd; outline-offset: 2px; }
+  .legal-sep { margin: 0 6px; opacity: .6; }
+
+  /* ---------- legal dialogs (Impressum / Datenschutz) ---------- */
+  .legal-dialog {
+    width: min(92vw, 640px);
+    max-height: 80vh;
+    overflow-y: auto;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 28px 26px;
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.6;
+  }
+  .legal-dialog[open] { display: block; }
+  .legal-dialog h2 {
+    font-family: var(--font-head);
+    font-weight: 700;
+    color: var(--rps);
+    font-size: 20px;
+    margin: 0 0 12px;
+  }
+  .legal-dialog h3 {
+    font-family: var(--font-head);
+    font-size: 14px;
+    color: var(--rps);
+    margin: 18px 0 4px;
+  }
+  .legal-dialog p { margin: 6px 0; font-size: 14px; }
+  .legal-dialog a { color: var(--rps); }
+  .legal-dialog::backdrop { background: rgba(50, 50, 50, .45); }
+  .legal-close {
+    float: right;
+    width: 34px;
+    height: 34px;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    background: #fff;
+    color: var(--rps);
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .legal-close:hover { background: var(--rps-soft); }
+  .legal-close:focus-visible { outline: 3px solid rgba(136, 9, 37, .35); outline-offset: 2px; }
 
   /* back to top (like school floating button) */
   #backtotop {
@@ -428,7 +520,7 @@
   <!-- header -->
   <header class="site-header">
     <div class="logo">
-      <img src="https://www.rps-herten.de/images/system/rps-logo.jpg"
+      <img src="img/rps-logo.jpg"
            alt="Rosa Parks Schule – Gesamtschule der Stadt Herten">
     </div>
     <p class="jubilee">1976 * 2026</p>
@@ -531,15 +623,68 @@
         <h2>Credits</h2>
         <p>Quiz erstellt von <b>Lasse Saalmann</b><br>
         UI-Inspiration: <a href="https://www.designsektor.de" target="_blank" rel="noopener">designsektor.de</a><br>
-        GitHub: <a href= "https://www.github.com/l"></a></p>
+        GitHub: <a href="https://www.github.com/l" target="_blank" rel="noopener">github.com/l</a></p>
       </div>
     </div>
     <div class="footer-credits">
       Ohne Mut und Inspiration werden Träume sterben, die Träume von Freiheit und Frieden.
+      <nav class="legal-links" aria-label="Rechtliches">
+        <button class="legal-link" type="button" data-dialog="dlg-impressum">Impressum</button>
+        <span class="legal-sep" aria-hidden="true">·</span>
+        <button class="legal-link" type="button" data-dialog="dlg-datenschutz">Datenschutz</button>
+      </nav>
     </div>
   </footer>
 
   <button id="backtotop" type="button" aria-label="Zurück zum Anfang">&uarr;</button>
+
+  <!-- ============ IMPRESSUM (Pflicht: §5 DDG / §18 MStV) ============ -->
+  <dialog id="dlg-impressum" class="legal-dialog" aria-labelledby="dlg-impressum-title">
+    <button class="legal-close" type="button" data-close aria-label="Schließen">&times;</button>
+    <h2 id="dlg-impressum-title">Impressum</h2>
+    <h3>Angaben gemäß § 5 DDG (Digitale-Dienste-Gesetz)</h3>
+    <p><strong>Rosa-Parks-Schule</strong><br>
+    Gesamtschule der Stadt Herten · Sekundarstufe I und II<br>
+    Fritz-Erler-Straße 2<br>
+    45701 Herten</p>
+    <h3>Vertreten durch</h3>
+    <p>Die Schulleiterin der Rosa-Parks-Schule Herten:<br>
+    Stephanie Brzoza (Schulleiterin)<br>
+    Stellvertreter: Tobias Hohlmann</p>
+    <h3>Kontakt</h3>
+    <p>Telefon: 02366/303720 und -21<br>
+    Fax: 02366/88321<br>
+    E-Mail: <a href="mailto:info@rps-herten.de">info@rps-herten.de</a></p>
+    <h3>Verantwortlich für den Inhalt (i.S.d. § 18 Abs. 2 MStV)</h3>
+    <p>Die Schulleitung der Rosa-Parks-Schule Herten, vertreten durch die Schulleiterin.</p>
+    <h3>Schulaufsicht / Träger</h3>
+    <p>Schulträger ist die Stadt Herten.</p>
+    <h3>Haftung für Inhalte</h3>
+    <p>Als Diensteanbieter sind wir für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Wir sind jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.</p>
+    <h3>Haftung für Links</h3>
+    <p>Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich.</p>
+    <h3>Urheberrecht</h3>
+    <p>Das Quiz wurde von Lasse Saalmann erstellt. Die verwendeten Bilder und Logos unterliegen dem Urheberrecht der jeweils berechtigten Personen und Institutionen. Das Schulmotto „Mit Mut und Inspiration für deine Zukunft" und weitere Inhalte sind Eigentum der Rosa-Parks-Schule Herten.</p>
+  </dialog>
+
+  <!-- ============ DATENSCHUTZERKLÄRUNG (Art. 12-14 DSGVO) ============ -->
+  <dialog id="dlg-datenschutz" class="legal-dialog" aria-labelledby="dlg-datenschutz-title">
+    <button class="legal-close" type="button" data-close aria-label="Schließen">&times;</button>
+    <h2 id="dlg-datenschutz-title">Datenschutzerklärung</h2>
+    <h3>1. Verantwortlicher</h3>
+    <p>Rosa-Parks-Schule Herten, Fritz-Erler-Straße 2, 45701 Herten, vertreten durch die Schulleitung (Angaben wie im Impressum).</p>
+    <h3>2. Allgemeines</h3>
+    <p>Der Schutz Ihrer personenbezogenen Daten ist uns wichtig. Diese Seite verarbeitet personenbezogene Daten ausschließlich im Rahmen der gesetzlichen Bestimmungen der DSGVO, des BDSG und des TDDDG.</p>
+    <h3>3. Hosting und Server-Logfiles</h3>
+    <p>Beim Aufruf dieser Seite verarbeitet der Hosting-Anbieter technisch notwendige Daten (z. B. IP-Adresse, Datum und Uhrzeit des Abrufs, Browserinformationen) in sog. Server-Logfiles. Dies ist zur Bereitstellung der Website erforderlich und erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Die Logfiles werden nach spätestens 7 Tagen gelöscht.</p>
+    <h3>4. Keine Cookies, kein Tracking</h3>
+    <p>Diese Website setzt keine Cookies, verwendet keine Tracking-Dienste, keine Analyse-Tools und keine Werbenetzwerke. Es wird kein Profil Ihres Nutzungsverhaltens erstellt. Beim Quiz werden keine Eingaben übertragen oder gespeichert.</p>
+    <h3>5. Externe Dienste</h3>
+    <p>Schriftarten, Bilder und sonstige Ressourcen werden ausschließlich vom eigenen Server geladen. Es werden keine Verbindungen zu Drittanbietern hergestellt.</p>
+    <h3>6. Ihre Rechte</h3>
+    <p>Sie haben im Rahmen der gesetzlichen Vorschriften das Recht auf Auskunft (Art. 15 DSGVO), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18), Datenübertragbarkeit (Art. 20) sowie ein Widerspruchsrecht (Art. 21 DSGVO). Zudem besteht ein Beschwerderecht bei der zuständigen Aufsichtsbehörde:</p>
+    <p>Landesbeauftragte für Datenschutz und Informationsfreiheit Nordrhein-Westfalen (LDI NRW), Kavalleriestraße 2&ndash;4, 40213 Düsseldorf.</p>
+  </dialog>
 
 <script>
 'use strict';
@@ -641,6 +786,20 @@ window.addEventListener("scroll", () => {
   $("backtotop").classList.toggle("show", window.scrollY > 500);
 }, { passive: true });
 $("backtotop").addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+
+/* ---------- legal dialogs (Impressum / Datenschutz) ---------- */
+document.querySelectorAll(".legal-link").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const dlg = document.getElementById(btn.dataset.dialog);
+    if (dlg && !dlg.open) dlg.showModal();
+  });
+});
+document.querySelectorAll(".legal-dialog").forEach((dlg) => {
+  dlg.querySelector("[data-close]").addEventListener("click", () => dlg.close());
+  dlg.addEventListener("click", (e) => {
+    if (e.target === dlg) dlg.close();
+  });
+});
 
 /* ---------- screens ---------- */
 function show(id) {

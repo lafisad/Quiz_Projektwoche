@@ -10,3 +10,13 @@
 [X] Add ACTUAL credits. Lasse Saalmann for creating the Quiz, <www.designsektor.de> as inspo for the UI. | Edited by opencode.big-pickle.2026-09-17
 [X] Remove the bullet points the bullet points on the homepage so that it's just a quiz, also. Define if names are actually parsed, because because of DSGVO I don't know whether I can even do that as a student of the school. (Just change section#screen-start.card so it's more usable normal) | Edited by opencode.big-pickle.2026-09-17
 [X] Fix sizing of the image, it looks blurred for me. Just half it in size and put 1976 * 2026 on the bottom | Edited by opencode.big-pickle.2026-09-17
+[ ] Impressum auf ein absolutes Minimum reduzieren.
+[ ] Datenschutz auf ein absolutes Minimum reduzieren.
+[ ] Nur tatsächlich zutreffende Angaben verwenden.
+[ ] Keine unnötigen Haftungs-/Rechtstexte hinzufügen.
+[ ] Keine Aussagen wie „Lasse haftet für nichts“ einbauen.
+[ ] Statisches Quiz ohne Accounts, Cookies, Tracking oder Quizdaten-Speicherung berücksichtigen.
+[ ] Hosting über `0xhc.duckdns.org` korrekt berücksichtigen.
+[ ] Bestehendes Design und Quizverhalten nicht verändern.
+[ ] WWW-Frage auf faktische Richtigkeit prüfen und ggf. korrigieren.
+[ ] Keine neuen externen Abhängigkeiten hinzufügen.
