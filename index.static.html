@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="de" dir="ltr" data-bs-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="handheldfriendly" content="true">
+<meta name="mobile-web-app-capable" content="YES">
+<meta name="theme-color" content="#880925">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: https://www.rps-herten.de; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com;">
+<title>Jubiläums-Quiz 50 Jahre · Rosa-Parks-Schule Herten</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&family=Quicksand:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rps: #880925;            /* burgundy – school primary */
+    --rps-dark: #6b071d;
+    --rps-soft: #fbe6e8;
+    --green: #008511;          /* school secondary accent */
+    --green-dark: #00620d;
+    --green-soft: #e7f5e8;
+    --red: #c62e2e;
+    --red-soft: #fbe9e9;
+    --gray: #575757;           /* school dark gray */
+    --ink: #323232;
+    --line: #ece6de;
+    --bg-soft: #faf7f2;
+    --radius: 14px;
+    --shadow: 0 8px 28px rgba(87, 87, 87, .10);
+    --font-head: "Comfortaa", "Comfortaa Light", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-body: "Quicksand", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: #ffffff;
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  img { max-width: 100%; height: auto; }
+
+  a { color: var(--rps); }
+
+  /* ---------- preloader (bouncing dots, like rps-herten.de) ---------- */
+  #astroid-preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity .4s ease;
+  }
+  #astroid-preloader.hidden { opacity: 0; pointer-events: none; }
+  .bouncing-loader { display: flex; justify-content: center; }
+  .bouncing-loader > div {
+    width: 20px; height: 20px; margin: 1rem .2rem 0;
+    background: rgb(136, 9, 37); border-radius: 50%;
+    animation: bouncing-loader .6s infinite alternate;
+  }
+  .bouncing-loader > div:nth-child(2) { animation-delay: .2s; }
+  .bouncing-loader > div:nth-child(3) { animation-delay: .4s; }
+  @keyframes bouncing-loader { to { opacity: .1; transform: translate3d(0, -1rem, 0); } }
+
+  /* ---------- header ---------- */
+  .site-header {
+    background: #fff;
+    border-bottom: 1px solid var(--line);
+    padding: max(18px, env(safe-area-inset-top)) 16px 16px;
+    text-align: center;
+  }
+  .site-header .logo { display: inline-block; }
+  .site-header .logo img {
+    width: min(160px, 70vw);
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+  .jubilee {
+    margin: 12px auto 0;
+    width: max-content;
+    text-align: center;
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: .08em;
+    color: var(--rps);
+    text-transform: uppercase;
+    border-top: 1px solid var(--line);
+    padding-top: 10px;
+  }
+
+  /* ---------- breadcrumb ---------- */
+  .breadcrumb {
+    background: var(--bg-soft);
+    border-bottom: 1px solid var(--line);
+    font-size: 13px;
+    color: var(--gray);
+    padding: 8px max(16px, env(safe-area-inset-left));
+  }
+  .breadcrumb a { color: var(--gray); text-decoration: none; }
+  .breadcrumb a:hover { color: var(--rps); }
+  .breadcrumb .sep { margin: 0 6px; opacity: .6; }
+  .breadcrumb .current { color: var(--rps); font-weight: 700; }
+
+  /* ---------- layout ---------- */
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 24px max(16px, env(safe-area-inset-right)) 8px max(16px, env(safe-area-inset-left));
+  }
+  .container.wide { max-width: 980px; }
+
+  .card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: clamp(18px, 4.5vw, 32px);
+  }
+  .card + .card { margin-top: 20px; }
+
+  /* screen headers like the school's module titles */
+  .mod-title {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: clamp(19px, 4.5vw, 23px);
+    color: var(--rps);
+    margin: 0 0 4px;
+    line-height: 1.35;
+  }
+  .mod-sub {
+    color: var(--gray);
+    font-size: 14px;
+    margin: 0 0 16px;
+  }
+
+  /* ---------- progress ---------- */
+  .prog-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--gray);
+    margin-bottom: 6px;
+    font-variant-numeric: tabular-nums;
+  }
+  .prog-row b { color: var(--rps); }
+  .prog-bar {
+    height: 10px;
+    border-radius: 99px;
+    background: #f0e6dd;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .prog-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 99px;
+    background: linear-gradient(90deg, var(--rps), #c0392b);
+    transition: width .35s ease;
+  }
+
+  /* ---------- year / question ---------- */
+  .year-badge {
+    display: inline-block;
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: clamp(32px, 9vw, 46px);
+    letter-spacing: .04em;
+    color: var(--rps);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .year-badge.final {
+    font-size: clamp(17px, 4.5vw, 20px);
+    background: var(--rps);
+    color: #fff;
+    padding: 9px 16px;
+    border-radius: 10px;
+    letter-spacing: .05em;
+  }
+  .question {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: clamp(16px, 4.5vw, 20px);
+    color: var(--ink);
+    line-height: 1.45;
+    margin: 8px 0 18px;
+  }
+
+  /* ---------- options ---------- */
+  .opts { display: grid; gap: 10px; }
+  .opt {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    text-align: left;
+    font: 600 16px/1.4 var(--font-body);
+    color: var(--ink);
+    background: #fff;
+    border: 2px solid var(--line);
+    border-radius: var(--radius);
+    padding: 13px 15px;
+    min-height: 52px;
+    cursor: pointer;
+    transition: transform .08s ease, border-color .15s ease, background .15s ease, color .15s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .opt .key {
+    flex: 0 0 auto;
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    border-radius: 8px;
+    background: var(--rps-soft);
+    color: var(--rps);
+    font-family: var(--font-head);
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .opt:not(:disabled):hover { border-color: var(--rps); transform: translateY(-1px); }
+  .opt:not(:disabled):active { transform: translateY(0); }
+  .opt:focus-visible { outline: 3px solid rgba(136, 9, 37, .35); outline-offset: 2px; }
+  .opt:disabled { cursor: default; }
+
+  .opt.ok { background: var(--green-soft); border-color: var(--green); color: var(--green-dark); }
+  .opt.ok .key { background: var(--green); color: #fff; }
+  .opt.no { background: var(--red-soft); border-color: var(--red); color: #7d1212; }
+  .opt.no .key { background: var(--red); color: #fff; }
+  .opt.dim { opacity: .55; }
+
+  /* ---------- feedback ---------- */
+  .feedback {
+    margin-top: 14px;
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-size: 15px;
+    font-weight: 500;
+    display: none;
+  }
+  .feedback.show { display: block; animation: fadein .25s ease; }
+  .feedback.ok { background: var(--green-soft); color: var(--green-dark); border: 1px solid var(--green); }
+  .feedback.no { background: var(--red-soft); color: #7d1212; border: 1px solid var(--red); }
+  @keyframes fadein { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; } }
+
+  /* ---------- buttons ---------- */
+  .btnrow { margin-top: 20px; display: grid; gap: 10px; }
+  .btn {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font: 700 16px var(--font-head);
+    color: #fff;
+    background: var(--rps);
+    border: 0;
+    border-radius: 99px;
+    padding: 14px 22px;
+    min-height: 52px;
+    cursor: pointer;
+    transition: background .15s ease, transform .08s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn:hover { background: var(--rps-dark); }
+  .btn:active { transform: translateY(1px); }
+  .btn:focus-visible { outline: 3px solid rgba(136, 9, 37, .35); outline-offset: 2px; }
+  .btn.green { background: var(--green); }
+  .btn.green:hover { background: var(--green-dark); }
+
+  /* ---------- intro ---------- */
+.intro { margin: 12px 0 4px; }
+  .intro b { color: var(--rps); }
+
+  .quote-band {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    text-align: center;
+    padding: 26px 22px;
+    margin-top: 20px;
+  }
+  .quote-band cite {
+    font-family: var(--font-head);
+    font-style: italic;
+    font-weight: 400;
+    color: #000;
+    font-size: clamp(16px, 4.2vw, 19px);
+    line-height: 1.5;
+  }
+  .quote-band .by { color: var(--gray); font-size: 14px; margin-top: 8px; }
+
+  /* ---------- result ---------- */
+  .result-score { display: grid; place-items: center; margin: 18px 0 6px; }
+  .score-ring {
+    width: 156px;
+    height: 156px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background:
+      radial-gradient(closest-side, #fff 78%, transparent 79% 100%),
+      conic-gradient(var(--rps) calc(var(--pct) * 1%), #f0e6dd 0);
+  }
+  .score-num { text-align: center; font-family: var(--font-head); font-weight: 700; line-height: 1; }
+  .score-num .big { font-size: 44px; color: var(--rps); }
+  .score-num .of { font-size: 15px; color: var(--gray); }
+
+  .result-msg {
+    text-align: center;
+    font-family: var(--font-head);
+    font-size: clamp(18px, 4.5vw, 22px);
+    font-weight: 700;
+    color: var(--rps);
+    margin: 14px 0 4px;
+  }
+  .result-sub { text-align: center; color: var(--gray); font-size: 15px; margin: 0; }
+
+  .hidden { display: none !important; }
+
+  /* ---------- error ---------- */
+  .err { text-align: center; padding: 36px 20px; }
+  .err h2 { font-family: var(--font-head); color: var(--rps); margin: 0 0 8px; }
+  .err code {
+    display: inline-block;
+    background: var(--bg-soft);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 2px 8px;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 13px;
+  }
+
+  /* ---------- footer (school footer style: #575757) ---------- */
+  .site-footer {
+    margin-top: 36px;
+    background: #575757;
+    color: #f5f5f5;
+    padding: calc(30px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left)) 26px max(16px, env(safe-area-inset-right));
+  }
+  .footer-grid {
+    max-width: 980px;
+    margin: 0 auto;
+    display: grid;
+    gap: 26px;
+    grid-template-columns: 1fr;
+  }
+  .site-footer h2 {
+    font-family: var(--font-head);
+    font-size: 17px;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 6px;
+    padding-bottom: 6px;
+    border-bottom: 3px solid #fff;
+    border-bottom-color: #ffb3bd;
+    display: inline-block;
+  }
+  .site-footer p { margin: 6px 0; font-size: 14px; line-height: 1.7; }
+  .site-footer a { color: #ffd7dd; text-decoration: none; }
+  .site-footer a:hover { text-decoration: underline; }
+  .site-footer .ig {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+  }
+  .footer-credits {
+    max-width: 980px;
+    margin: 24px auto 0;
+    border-top: 1px solid rgba(255, 255, 255, .25);
+    padding-top: 16px;
+    font-size: 12px;
+    color: #cfcfcf;
+    text-align: center;
+  }
+
+  /* back to top (like school floating button) */
+  #backtotop {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    width: 46px;
+    height: 46px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--rps);
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(87, 87, 87, .35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .25s ease;
+    z-index: 50;
+  }
+  #backtotop.show { opacity: 1; pointer-events: auto; }
+  #backtotop:focus-visible { outline: 3px solid rgba(136, 9, 37, .4); outline-offset: 2px; }
+
+  @media (min-width: 640px) {
+    .footer-grid { grid-template-columns: 1fr 1fr 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+  <!-- preloader -->
+  <div id="astroid-preloader" aria-hidden="true"><div class="bouncing-loader"><div></div><div></div><div></div></div></div>
+
+  <!-- header -->
+  <header class="site-header">
+    <div class="logo">
+      <img src="https://www.rps-herten.de/images/system/rps-logo.jpg"
+           alt="Rosa Parks Schule – Gesamtschule der Stadt Herten">
+    </div>
+    <p class="jubilee">1976 * 2026</p>
+  </header>
+
+  <!-- breadcrumb -->
+  <nav class="breadcrumb" aria-label="Sie sind hier:">
+    <a href="https://www.rps-herten.de/">Start</a><span class="sep">›</span>
+    <span class="current">Jubiläums-Quiz 50 Jahre</span>
+  </nav>
+
+  <main class="container">
+
+    <!-- ============ START ============ -->
+    <section class="card" id="screen-start">
+      <h1 class="mod-title">Das große 50-Jahre-Quiz</h1>
+      <p class="mod-sub">Was geschah wann? 1970 bis 2026 – und ein paar Fragen nur für Eingeweihte.</p>
+
+      <p class="intro">
+        Aus einem Pool von <b>57 Ereignissen</b> der Jahre 1970 bis 2026 zieht jede
+        Runde <b>15 Fragen</b> – zum Schluss wartet eine <b>Schul-Überraschungsfrage</b>.
+      </p>
+
+      <div class="btnrow">
+        <button class="btn" id="btn-start" type="button">Los geht&rsquo;s, 50 Jahre!</button>
+      </div>
+    </section>
+
+    <!-- ============ QUIZ ============ -->
+    <section class="card hidden" id="screen-quiz">
+      <div class="prog-row">
+        <span>Frage <b id="q-pos">1</b> / <span id="q-total">15</span></span>
+        <span id="score-chip">0 Punkte</span>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="prog-fill"></div></div>
+
+      <div id="year-badge"></div>
+      <h2 class="question" id="q-text"></h2>
+
+      <div class="opts" id="opts"></div>
+
+      <div class="feedback" id="feedback" role="status" aria-live="polite"></div>
+
+      <div class="btnrow">
+        <button class="btn green hidden" id="btn-next" type="button"><span id="btn-next-label">Weiter</span></button>
+      </div>
+    </section>
+
+    <!-- ============ RESULT ============ -->
+    <section class="card hidden" id="screen-result">
+      <h2 class="mod-title">Dein Ergebnis</h2>
+
+      <div class="result-score">
+        <div class="score-ring" id="score-ring">
+          <div class="score-num"><div class="big" id="score-num">0/15</div><div class="of" id="score-pct">0 %</div></div>
+        </div>
+      </div>
+
+      <p class="result-msg" id="res-msg"></p>
+      <p class="result-sub" id="res-sub"></p>
+
+      <div class="btnrow">
+        <button class="btn" id="btn-replay" type="button">Nochmal spielen</button>
+      </div>
+    </section>
+
+    <!-- ============ ERROR ============ -->
+    <section class="card hidden" id="screen-error">
+      <div class="err">
+        <h2>Huch, das lädt nicht.</h2>
+        <p>Die Fragen konnten nicht geladen werden. Bitte starte die Seite über einen lokalen Server:</p>
+        <p><code>python3 -m http.server</code></p>
+      </div>
+    </section>
+
+    <!-- quote band (like rps-herten.de) -->
+    <section class="quote-band hidden" id="quote-band">
+      <cite>&laquo; Jeder Mensch sollte sein Leben als Vorbild für andere leben. &raquo;</cite>
+      <p class="by">– Rosa Parks</p>
+    </section>
+  </main>
+
+  <!-- footer (school footer: #575757) -->
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div>
+        <h2>Jubiläums-Quiz</h2>
+        <p>50 Jahre Rosa-Parks-Schule<br>
+        Gesamtschule der Stadt Herten.<br>
+        1976 &ndash; 2026.</p>
+      </div>
+      <div>
+        <h2>Anschrift</h2>
+        <p>Rosa-Parks-Schule<br>
+        Fritz-Erler-Straße 2<br>
+        45701 Herten</p>
+        <p><a href="https://www.instagram.com/rosaparksschuleherten/" target="_blank" rel="noopener" class="ig">Instagram der Schule →</a></p>
+      </div>
+      <div>
+        <h2>Credits</h2>
+        <p>Quiz erstellt von <b>Lasse Saalmann</b><br>
+        UI-Inspiration: <a href="https://www.designsektor.de" target="_blank" rel="noopener">designsektor.de</a><br>
+        GitHub: <a href= "https://www.github.com/l"></a></p>
+      </div>
+    </div>
+    <div class="footer-credits">
+      Ohne Mut und Inspiration werden Träume sterben, die Träume von Freiheit und Frieden.
+    </div>
+  </footer>
+
+  <button id="backtotop" type="button" aria-label="Zurück zum Anfang">&uarr;</button>
+
+<script>
+'use strict';
+
+/* ============================================================
+   FROZEN QUESTIONS (static preview)
+   The final version fetches config/questions/questions.json.
+   Extra field `is_final: true` pins a question to the end.
+   ============================================================ */
+const QUESTIONS = [
+  {year:1970,question:"Was geschah im Jahr 1970?",options:["Louise Brown wird geboren (erstes Retortenbaby)","Apollo 13","Atomkatastrophe von Fukushima","UN-Konferenz"],correct_answer:"Apollo 13"},
+  {year:1971,question:"Was geschah im Jahr 1971?",options:["Erste Email wird verschickt","Sudan, das letzte männliche Nördliche Breitmaulnashorn, stirbt","Star Wars kommt in die Kinos","Der Walkman kommt auf den Markt"],correct_answer:"Erste Email wird verschickt"},
+  {year:1972,question:"Was geschah im Jahr 1972?",options:["UN-Konferenz","Apple wird gegründet","Ölkrise","Erste Email wird verschickt"],correct_answer:"UN-Konferenz"},
+  {year:1973,question:"Was geschah im Jahr 1973?",options:["Brexit-Referendum in Großbritannien","Michael Jacksons Album Thriller erscheint","Fußball-Weltmeisterschaft in Deutschland","Ölkrise"],correct_answer:"Ölkrise"},
+  {year:1974,question:"Was geschah im Jahr 1974?",options:["Russland überfällt die Ukraine (Beginn Ukraine-Krieg)","Geiseldrama von Gladbeck","Deutschland wird Fußball-Weltmeister","Barack Obama wird US-Präsident"],correct_answer:"Deutschland wird Fußball-Weltmeister"},
+  {year:1975,question:"Was geschah im Jahr 1975?",options:["Ermordung von John Lennon","Das World Wide Web (WWW) wird erfunden","Microsoft wird gegründet","Geiseldrama von Gladbeck"],correct_answer:"Microsoft wird gegründet"},
+  {year:1976,question:"Was geschah im Jahr 1976?",options:["Microsoft wird gegründet","Apple wird gegründet","Windows 95 erscheint","Star Wars kommt in die Kinos"],correct_answer:"Apple wird gegründet"},
+  {year:1977,question:"Was geschah im Jahr 1977?",options:["UN-Konferenz","Russland überfällt die Ukraine (Beginn Ukraine-Krieg)","#MeToo-Bewegung beginnt","Star Wars kommt in die Kinos"],correct_answer:"Star Wars kommt in die Kinos"},
+  {year:1978,question:"Was geschah im Jahr 1978?",options:["Windows 95 erscheint","Microsoft wird gegründet","Louise Brown wird geboren (erstes Retortenbaby)","Fußball-Weltmeisterschaft in Deutschland"],correct_answer:"Louise Brown wird geboren (erstes Retortenbaby)"},
+  {year:1979,question:"Was geschah im Jahr 1979?",options:["Michael Jacksons Album Thriller erscheint","Brexit-Referendum in Großbritannien","Der Walkman kommt auf den Markt","Orkan Kyrill"],correct_answer:"Der Walkman kommt auf den Markt"},
+  {year:1980,question:"Was geschah im Jahr 1980?",options:["Microsoft wird gegründet","Ermordung von John Lennon","Beginn der Covid-19-Pandemie","Fall der Berliner Mauer"],correct_answer:"Ermordung von John Lennon"},
+  {year:1981,question:"Was geschah im Jahr 1981?",options:["AIDS wird entdeckt","Millennium-Feiern","Geiseldrama von Gladbeck","Atomkatastrophe von Fukushima"],correct_answer:"AIDS wird entdeckt"},
+  {year:1982,question:"Was geschah im Jahr 1982?",options:["Privates Fernsehen startet in Deutschland","Die Europäische Union wird gegründet","Der erste PC wird vorgestellt","Angela Merkel wird zum dritten Mal Bundeskanzlerin"],correct_answer:"Der erste PC wird vorgestellt"},
+  {year:1983,question:"Was geschah im Jahr 1983?",options:["Ermordung von John Lennon","Michael Jacksons Album Thriller erscheint","Michael Jackson stirbt","Atomkatastrophe von Fukushima"],correct_answer:"Michael Jacksons Album Thriller erscheint"},
+  {year:1984,question:"Was geschah im Jahr 1984?",options:["Windows 95 erscheint","Privates Fernsehen startet in Deutschland","Atomkatastrophe von Fukushima","Geiseldrama von Gladbeck"],correct_answer:"Privates Fernsehen startet in Deutschland"},
+  {year:1985,question:"Was geschah im Jahr 1985?",options:["Ölkrise","Boris Becker gewinnt Wimbledon","Taylor Swifts Eras Tour","Beginn der Covid-19-Pandemie"],correct_answer:"Boris Becker gewinnt Wimbledon"},
+  {year:1986,question:"Was geschah im Jahr 1986?",options:["Rosa Parks erhält die Presidential Medal of Freedom","Katastrophe von Tschernobyl","Deutschland wird Fußball-Weltmeister","Geiseldrama von Gladbeck"],correct_answer:"Katastrophe von Tschernobyl"},
+  {year:1987,question:"Was geschah im Jahr 1987?",options:["Michael Jacksons Album Thriller erscheint","Olympische Spiele in London","Einführung des Euro als Bargeld","Reagan-Appell (Rede vor dem Brandenburger Tor)"],correct_answer:"Reagan-Appell (Rede vor dem Brandenburger Tor)"},
+  {year:1988,question:"Was geschah im Jahr 1988?",options:["Der Walkman kommt auf den Markt","Geiseldrama von Gladbeck","Louise Brown wird geboren (erstes Retortenbaby)","Katastrophe von Tschernobyl"],correct_answer:"Geiseldrama von Gladbeck"},
+  {year:1989,question:"Was geschah im Jahr 1989?",options:["Google wird gegründet","Sudan, das letzte männliche Nördliche Breitmaulnashorn, stirbt","Barack Obama wird US-Präsident","Fall der Berliner Mauer"],correct_answer:"Fall der Berliner Mauer"},
+  {year:1990,question:"Was geschah im Jahr 1990?",options:["Einführung des Dosenpfands in Deutschland","Einführung des Euro als Bargeld","Deutsche Wiedervereinigung","Louise Brown wird geboren (erstes Retortenbaby)"],correct_answer:"Deutsche Wiedervereinigung"},
+  {year:1991,question:"Was geschah im Jahr 1991?",options:["Atomkatastrophe von Fukushima","Der Walkman kommt auf den Markt","Ermordung von John Lennon","Ötzi wird gefunden"],correct_answer:"Ötzi wird gefunden"},
+  {year:1992,question:"Was geschah im Jahr 1992?",options:["Michael Jackson stirbt","Windows 95 erscheint","Das World Wide Web (WWW) wird erfunden","Millennium-Feiern"],correct_answer:"Das World Wide Web (WWW) wird erfunden"},
+  {year:1993,question:"Was geschah im Jahr 1993?",options:["Ebola-Ausbruch in Westafrika","#MeToo-Bewegung beginnt","Die Europäische Union wird gegründet","Star Wars kommt in die Kinos"],correct_answer:"Die Europäische Union wird gegründet"},
+  {year:1994,question:"Was geschah im Jahr 1994?",options:["Google wird gegründet","Star Wars kommt in die Kinos","Nelson Mandela wird Präsident Südafrikas","Geiseldrama von Gladbeck"],correct_answer:"Nelson Mandela wird Präsident Südafrikas"},
+  {year:1995,question:"Was geschah im Jahr 1995?",options:["Windows 95 erscheint","#MeToo-Bewegung beginnt","Einführung des Dosenpfands in Deutschland","Katastrophe von Tschernobyl"],correct_answer:"Windows 95 erscheint"},
+  {year:1996,question:"Was geschah im Jahr 1996?",options:["Fall der Berliner Mauer","Rosa Parks erhält die Presidential Medal of Freedom","Rosa-Parks-Schule wird 50 Jahre alt","Atomkatastrophe von Fukushima"],correct_answer:"Rosa Parks erhält die Presidential Medal of Freedom"},
+  {year:1997,question:"Was geschah im Jahr 1997?",options:["Prinzessin Diana stirbt","Ermordung von John Lennon","Rosa Parks stirbt","Notre-Dame-Kathedrale in Paris brennt"],correct_answer:"Prinzessin Diana stirbt"},
+  {year:1998,question:"Was geschah im Jahr 1998?",options:["Google wird gegründet","Einführung des Euro als Bargeld","Erste Email wird verschickt","Star Wars kommt in die Kinos"],correct_answer:"Google wird gegründet"},
+  {year:1999,question:"Was geschah im Jahr 1999?",options:["Orkan Kyrill","Boris Becker gewinnt Wimbledon","Rosa Parks erhält die Congressional Gold Medal","Ölkrise"],correct_answer:"Rosa Parks erhält die Congressional Gold Medal"},
+  {year:2000,question:"Was geschah im Jahr 2000?",options:["Notre-Dame-Kathedrale in Paris brennt","Millennium-Feiern","Krönung von King Charles III.","Deutschland wird Fußball-Weltmeister"],correct_answer:"Millennium-Feiern"},
+  {year:2001,question:"Was geschah im Jahr 2001?",options:["Ermordung von John Lennon","Katastrophe von Tschernobyl","Fußball-Weltmeisterschaft in Deutschland","Terroranschläge vom 11. September (9/11)"],correct_answer:"Terroranschläge vom 11. September (9/11)"},
+  {year:2002,question:"Was geschah im Jahr 2002?",options:["Brexit-Referendum in Großbritannien","Einführung des Euro als Bargeld","Fall der Berliner Mauer","Windows 95 erscheint"],correct_answer:"Einführung des Euro als Bargeld"},
+  {year:2003,question:"Was geschah im Jahr 2003?",options:["Privates Fernsehen startet in Deutschland","Einführung des Dosenpfands in Deutschland","Boris Becker gewinnt Wimbledon","Star Wars kommt in die Kinos"],correct_answer:"Einführung des Dosenpfands in Deutschland"},
+  {year:2004,question:"Was geschah im Jahr 2004?",options:["Tsunami im Indischen Ozean","Privates Fernsehen startet in Deutschland","Barack Obama wird US-Präsident","Fußball-Weltmeisterschaft in Deutschland"],correct_answer:"Tsunami im Indischen Ozean"},
+  {year:2005,question:"Was geschah im Jahr 2005?",options:["Rosa Parks stirbt","Ölkrise","Brexit-Referendum in Großbritannien","Atomkatastrophe von Fukushima"],correct_answer:"Rosa Parks stirbt"},
+  {year:2006,question:"Was geschah im Jahr 2006?",options:["Rosa-Parks-Schule wird 50 Jahre alt","Deutschland wird Fußball-Weltmeister","Fußball-Weltmeisterschaft in Deutschland","Ötzi wird gefunden"],correct_answer:"Fußball-Weltmeisterschaft in Deutschland"},
+  {year:2007,question:"Was geschah im Jahr 2007?",options:["Louise Brown wird geboren (erstes Retortenbaby)","Tsunami im Indischen Ozean","Michael Jacksons Album Thriller erscheint","Orkan Kyrill"],correct_answer:"Orkan Kyrill"},
+  {year:2008,question:"Was geschah im Jahr 2008?",options:["Der erste PC wird vorgestellt","Rosa Parks erhält die Presidential Medal of Freedom","Barack Obama wird US-Präsident","Russland überfällt die Ukraine (Beginn Ukraine-Krieg)"],correct_answer:"Barack Obama wird US-Präsident"},
+  {year:2009,question:"Was geschah im Jahr 2009?",options:["Prinzessin Diana stirbt","Das World Wide Web (WWW) wird erfunden","Rosa Parks erhält die Presidential Medal of Freedom","Michael Jackson stirbt"],correct_answer:"Michael Jackson stirbt"},
+  {year:2010,question:"Was geschah im Jahr 2010?",options:["Loveparade-Katastrophe in Duisburg","Apple wird gegründet","Olympische Spiele in London","Ebola-Ausbruch in Westafrika"],correct_answer:"Loveparade-Katastrophe in Duisburg"},
+  {year:2011,question:"Was geschah im Jahr 2011?",options:["Atomkatastrophe von Fukushima","Apple wird gegründet","Russland überfällt die Ukraine (Beginn Ukraine-Krieg)","Rosa-Parks-Schule wird 50 Jahre alt"],correct_answer:"Atomkatastrophe von Fukushima"},
+  {year:2012,question:"Was geschah im Jahr 2012?",options:["Louise Brown wird geboren (erstes Retortenbaby)","Google wird gegründet","Tsunami im Indischen Ozean","Olympische Spiele in London"],correct_answer:"Olympische Spiele in London"},
+  {year:2013,question:"Was geschah im Jahr 2013?",options:["Rosa-Parks-Schule wird 50 Jahre alt","Angela Merkel wird zum dritten Mal Bundeskanzlerin","Boris Becker gewinnt Wimbledon","Rosa Parks erhält die Congressional Gold Medal"],correct_answer:"Angela Merkel wird zum dritten Mal Bundeskanzlerin"},
+  {year:2014,question:"Was geschah im Jahr 2014?",options:["Atomkatastrophe von Fukushima","Tsunami im Indischen Ozean","Ebola-Ausbruch in Westafrika","Ölkrise"],correct_answer:"Ebola-Ausbruch in Westafrika"},
+  {year:2015,question:"Was geschah im Jahr 2015?",options:["Terroranschläge vom 11. September (9/11)","Rosa Parks erhält die Presidential Medal of Freedom","Ermordung von John Lennon","Pariser Klimaabkommen wird beschlossen"],correct_answer:"Pariser Klimaabkommen wird beschlossen"},
+  {year:2016,question:"Was geschah im Jahr 2016?",options:["Brexit-Referendum in Großbritannien","Nelson Mandela wird Präsident Südafrikas","Ermordung von John Lennon","Ölkrise"],correct_answer:"Brexit-Referendum in Großbritannien"},
+  {year:2017,question:"Was geschah im Jahr 2017?",options:["Sturm auf das Kapitol in Washington","Rosa Parks erhält die Congressional Gold Medal","Geiseldrama von Gladbeck","#MeToo-Bewegung beginnt"],correct_answer:"#MeToo-Bewegung beginnt"},
+  {year:2018,question:"Was geschah im Jahr 2018?",options:["Sudan, das letzte männliche Nördliche Breitmaulnashorn, stirbt","Geiseldrama von Gladbeck","Der Walkman kommt auf den Markt","Der erste PC wird vorgestellt"],correct_answer:"Sudan, das letzte männliche Nördliche Breitmaulnashorn, stirbt"},
+  {year:2019,question:"Was geschah im Jahr 2019?",options:["Notre-Dame-Kathedrale in Paris brennt","Deutsche Wiedervereinigung","Ölkrise","#MeToo-Bewegung beginnt"],correct_answer:"Notre-Dame-Kathedrale in Paris brennt"},
+  {year:2020,question:"Was geschah im Jahr 2020?",options:["Beginn der Covid-19-Pandemie","Einführung des Dosenpfands in Deutschland","Einführung des Euro als Bargeld","Friedrich Merz wird Bundeskanzler"],correct_answer:"Beginn der Covid-19-Pandemie"},
+  {year:2021,question:"Was geschah im Jahr 2021?",options:["AIDS wird entdeckt","Sturm auf das Kapitol in Washington","Deutschland wird Fußball-Weltmeister","Friedrich Merz wird Bundeskanzler"],correct_answer:"Sturm auf das Kapitol in Washington"},
+  {year:2022,question:"Was geschah im Jahr 2022?",options:["Russland überfällt die Ukraine (Beginn Ukraine-Krieg)","Windows 95 erscheint","Fußball-Weltmeisterschaft in Deutschland","Star Wars kommt in die Kinos"],correct_answer:"Russland überfällt die Ukraine (Beginn Ukraine-Krieg)"},
+  {year:2023,question:"Was geschah im Jahr 2023?",options:["Krönung von King Charles III.","Michael Jackson stirbt","Microsoft wird gegründet","Rosa Parks erhält die Presidential Medal of Freedom"],correct_answer:"Krönung von King Charles III."},
+  {year:2024,question:"Was geschah im Jahr 2024?",options:["Olympische Spiele in London","Deutsche Wiedervereinigung","Taylor Swifts Eras Tour","Pariser Klimaabkommen wird beschlossen"],correct_answer:"Taylor Swifts Eras Tour"},
+  {year:2025,question:"Was geschah im Jahr 2025?",options:["Louise Brown wird geboren (erstes Retortenbaby)","Friedrich Merz wird Bundeskanzler","Olympische Spiele in London","Atomkatastrophe von Fukushima"],correct_answer:"Friedrich Merz wird Bundeskanzler"},
+  {year:2026,question:"Was geschah im Jahr 2026?",options:["Deutschland wird Fußball-Weltmeister","Sudan, das letzte männliche Nördliche Breitmaulnashorn, stirbt","Apollo 13","Rosa-Parks-Schule wird 50 Jahre alt"],correct_answer:"Rosa-Parks-Schule wird 50 Jahre alt"},
+  {year:1976,question:"In welchem Jahr wurde die Gesamtschule in Herten gegründet, aus der später die Rosa-Parks-Schule wurde?",options:["1966","1976","1986","2008"],correct_answer:"1976",is_final:true}
+];
+
+const RANDOM_COUNT = 14; /* 14 random + 1 fixed final question */
+
+/* ---------- helpers ---------- */
+const $ = (id) => document.getElementById(id);
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+function esc(s) {
+  const d = document.createElement("div");
+  d.textContent = s;
+  return d.innerHTML;
+}
+
+/* ---------- state ---------- */
+let round = [];
+let qIndex = 0;
+let score = 0;
+
+/* ---------- preloader / to-top ---------- */
+window.addEventListener("load", () => {
+  setTimeout(() => $("astroid-preloader").classList.add("hidden"), 250);
+});
+window.addEventListener("scroll", () => {
+  $("backtotop").classList.toggle("show", window.scrollY > 500);
+}, { passive: true });
+$("backtotop").addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+
+/* ---------- screens ---------- */
+function show(id) {
+  ["start", "quiz", "result", "error"].forEach((s) =>
+    $("screen-" + s).classList.toggle("hidden", s !== id)
+  );
+  $("quote-band").classList.toggle("hidden", id !== "result");
+  window.scrollTo({ top: 0 });
+}
+
+/* ---------- round ---------- */
+function buildRound() {
+  const finalQ = QUESTIONS.filter((q) => q.is_final);
+  const pool = QUESTIONS.filter((q) => !q.is_final);
+  const pick = shuffle(pool).slice(0, Math.max(0, RANDOM_COUNT));
+  round = shuffle(pick.concat(finalQ)).map((q) => ({
+    ...q,
+    options: shuffle(q.options)
+  }));
+}
+
+/* ---------- render ---------- */
+const KEYS = ["A", "B", "C", "D"];
+
+function renderQuestion() {
+  const q = round[qIndex];
+  $("q-pos").textContent = qIndex + 1;
+  $("q-total").textContent = round.length;
+  $("q-text").textContent = q.question;
+
+  const yearEl = $("year-badge");
+  yearEl.innerHTML = "";
+  const b = document.createElement("span");
+  b.className = "year-badge" + (q.is_final ? " final" : "");
+  b.textContent = q.is_final ? "Das große Finale · 50 Jahre" : q.year + "";
+  yearEl.appendChild(b);
+
+  const opts = $("opts");
+  opts.innerHTML = "";
+  q.options.forEach((opt, i) => {
+    const bl = document.createElement("button");
+    bl.type = "button";
+    bl.className = "opt";
+    bl.setAttribute("data-answer", opt);
+    bl.innerHTML = '<span class="key">' + KEYS[i] + "</span><span>" + esc(opt) + "</span>";
+    bl.addEventListener("click", () => answer(bl));
+    opts.appendChild(bl);
+  });
+
+  $("feedback").className = "feedback";
+  $("feedback").textContent = "";
+  $("btn-next").classList.add("hidden");
+  updateProgress(false);
+}
+
+function answer(btn) {
+  const q = round[qIndex];
+  const chosen = btn.getAttribute("data-answer");
+  const correct = chosen === q.correct_answer;
+  if (correct) score++;
+
+  document.querySelectorAll("#opts .opt").forEach((b) => {
+    const val = b.getAttribute("data-answer");
+    b.disabled = true;
+    if (val === q.correct_answer) b.classList.add("ok");
+    else if (val === chosen) b.classList.add("no");
+    else b.classList.add("dim");
+  });
+
+  const fb = $("feedback");
+  if (correct) {
+    fb.className = "feedback show ok";
+    fb.textContent = "Richtig, gut geraten!";
+  } else {
+    fb.className = "feedback show no";
+    fb.textContent = "Leider daneben. Richtig wäre: " + q.correct_answer + ".";
+  }
+
+  updateProgress(true);
+
+  const last = qIndex + 1 >= round.length;
+  $("btn-next-label").textContent = last ? "Ergebnis anzeigen" : "Weiter";
+  $("btn-next").classList.remove("hidden");
+  $("score-chip").textContent = score + " Punkt" + (score === 1 ? "" : "e");
+}
+
+function updateProgress(full) {
+  const pct = full
+    ? Math.round(((qIndex + 1) / round.length) * 100)
+    : Math.round((qIndex / round.length) * 100);
+  $("prog-fill").style.width = pct + "%";
+}
+
+function next() {
+  qIndex++;
+  if (qIndex >= round.length) showResult();
+  else renderQuestion();
+}
+
+/* ---------- result ---------- */
+function resultMeta(p) {
+  if (score === round.length)
+    return ["Perfekt!", "15 von 15 – du bist ein wahres Schul-Original!"];
+  if (p >= 70)
+    return ["Stark!", "Da steckt eine echte Rosa-Parks-Spürnase drin."];
+  if (p >= 45)
+    return ["Gut gemacht", "Ein bisschen Training schadet nie – gleich nochmal!"];
+  return ["Aller Anfang ist schwer", "Mal sehen, ob die zweite Runde besser läuft. Dranbleiben!"];
+}
+
+function showResult() {
+  const pct = Math.round((score / round.length) * 100);
+  $("score-ring").style.setProperty("--pct", pct);
+  $("score-num").textContent = score + "/" + round.length;
+  $("score-pct").textContent = pct + " %";
+
+  const [msg, sub] = resultMeta(pct);
+  $("res-msg").textContent = msg;
+  $("res-sub").textContent = sub;
+
+  show("result");
+}
+
+/* ---------- start ---------- */
+function start() {
+  score = 0;
+  qIndex = 0;
+  buildRound();
+  show("quiz");
+  renderQuestion();
+  $("btn-start").blur();
+}
+
+$("btn-start").addEventListener("click", start);
+$("btn-replay").addEventListener("click", start);
+$("btn-next").addEventListener("click", next);
+
+show("start");
+</script>
+<noscript><p style="text-align:center;padding:40px;">Für das Quiz ist JavaScript nötig.</p></noscript>
+</body>
+</html>
